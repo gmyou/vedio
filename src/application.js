@@ -26,6 +26,7 @@ var Application = function() {
         false);*/
     this.console_ = document.getElementById('console');
     this.playButton_ = document.getElementById('playpause');
+    this.playTime_ = document.getElementById('playtime');
     this.playButton_.addEventListener(
         'click',
         this.bind_(this, this.onClick_),
@@ -201,6 +202,7 @@ var Application = function() {
   Application.prototype.updateChrome_ = function() {
     if (this.playing_) {
       this.playButton_.textContent = 'II';
+      this.playTime_.textContent = this.videoPlayer_.getDuration();
     } else {
       // Unicode play symbol.
       this.playButton_.textContent = String.fromCharCode(9654);

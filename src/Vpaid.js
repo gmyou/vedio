@@ -141,7 +141,6 @@ var VpaidVideoPlayer = function() {
    * @private
    */
   VpaidVideoPlayer.prototype.timeUpdateHandler_ = function() {
-    
     if (this.lastQuartileIndex_ >= this.quartileEvents_.length) {
       return;
     }

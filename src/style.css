@@ -58,6 +58,23 @@ body {
     cursor: pointer;
     line-height: 0;
   }
+
+  #playtime {
+    position: absolute;
+    left: 240px;
+    bottom: 20px;
+    height: 40px;
+    width: 140px;
+    border-style: none;
+    font-weight: bold;
+    font-size: 25px;
+    opacity: 0.5;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px transparent solid;
+    color: #000;
+    line-height: 0;
+  }
   
   #playpause:hover {
     border: 1px #f00 solid;

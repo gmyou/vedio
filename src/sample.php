@@ -51,6 +51,7 @@
       <div id="adcontainer">
       </div>
       <button id="playpause">&#9654;</button>
+      <button id="playtime">00:00:00</button>
       <button id="fullscreen">[&nbsp;&nbsp;]</button>
     </div>
 
