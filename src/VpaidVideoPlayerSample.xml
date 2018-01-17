@@ -1,55 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VAST version="3.0">
-   <Ad id="456">
+<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
+   <Ad id="1234567">
       <InLine>
-         <AdSystem version="1.0"><![CDATA[CrossTarget]]></AdSystem>
-         <AdTitle />
-         <Error><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=error&error_code=[ERRORCODE]]]></Error>
-         <Impression><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=impression&offset=[CONTENTPLAYHEAD]]]></Impression>
+         <AdSystem>GDFP</AdSystem>
+         <AdTitle>Linear VPAID Example</AdTitle>
+         <Description>Vpaid Linear Video Ad</Description>
+         <Error>http://www.example.com/error</Error>
+         <Impression>http://www.example.com/impression</Impression>
          <Creatives>
-            <Creative>
+            <Creative sequence="1">
                <Linear>
-                  <Duration>00:00:30</Duration>
+                  <Duration>00:00:13</Duration>
                   <TrackingEvents>
-                     <Tracking event="creativeView"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=creativeView&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="start"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=start&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="firstQuartile"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=firstQuartile&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="midpoint"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=midpoint&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="thirdQuartile"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=thirdQuartile&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="complete"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=complete&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="mute"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=mute&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="unmute"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=unmute&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="pause"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=pause&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="rewind"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=rewind&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="resume"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=resume&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="fullscreen"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=fullscreen&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="expand"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=expand&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="collapse"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=collapse&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="exitFullscreen"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=exitFullscreen&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="acceptInvitationLinear"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=acceptInvitationLinear&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="closeLinear"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=closeLinear&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="skip"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=skip&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     <Tracking event="progress" offset="00:00:15"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=progress&offset=[CONTENTPLAYHEAD]]]></Tracking>
+                     <Tracking event="start">http://www.example.com/start</Tracking>
+                     <Tracking event="firstQuartile">http://www.example.com/firstQuartile</Tracking>
+                     <Tracking event="midpoint">http://www.example.com/midpoint</Tracking>
+                     <Tracking event="thirdQuartile">http://www.example.com/thirdQuartile</Tracking>
+                     <Tracking event="complete">http://www.example.com/complete</Tracking>
+                     <Tracking event="mute">http://www.example.com/mute</Tracking>
+                     <Tracking event="unmute">http://www.example.com/unmute</Tracking>
+                     <Tracking event="rewind">http://www.example.com/rewind</Tracking>
+                     <Tracking event="pause">http://www.example.com/pause</Tracking>
+                     <Tracking event="resume">http://www.example.com/resume</Tracking>
+                     <Tracking event="fullscreen">http://www.example.com/fullscreen</Tracking>
+                     <Tracking event="creativeView">http://www.example.com/creativeView</Tracking>
+                     <Tracking event="acceptInvitation">http://www.example.com/acceptInvitation</Tracking>
                   </TrackingEvents>
+                  <AdParameters><![CDATA[{"videos":[
+ {"url":"http://d22e9nnpe1lnrt.cloudfront.net/mp4/119/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a/mp4_480_16X9_preset_id/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a.mp4","mimetype":"video/mp4"}],
+ "overlay":"http://ryanthompson591.github.io/vpaidExamples/img/ClickMe.jpg"}]]></AdParameters>
                   <VideoClicks>
-                     <ClickThrough><![CDATA[mopubnativebrowser://navigate?url=http%3A%2F%2Fdev.cross-target.com%3A82%2Fmopub%2Fclick%3Fid%3D5a0a6e008967403976c30aba%26res%3Dv]]></ClickThrough>
+                     <ClickThrough id="123">http://google.com</ClickThrough>
+                     <ClickTracking id="123">http://www.example.com/click</ClickTracking>
                   </VideoClicks>
                   <MediaFiles>
-                     <MediaFile delivery="progressive" type="video/mp4" width="320" height="480"><![CDATA[http://d22e9nnpe1lnrt.cloudfront.net/mp4/119/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a/mp4_480_16X9_preset_id/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a.mp4]]></MediaFile>
+                     <MediaFile apiFramework="VPAID" type="application/javascript">VpaidVideoAd.js</MediaFile>
                   </MediaFiles>
                </Linear>
             </Creative>
-            <Creative>
-               <CompanionAds>
-                  <Companion width="192" height="108">
-                     <StaticResource creativeType="image/png"><![CDATA[http://st-dev.onnuridmc.com/banner/201603/00d89e1371a14ea55b954c98466dce24.png]]></StaticResource>
-                     <TrackingEvents>
-                        <Tracking event="creativeView"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=c_creativeView&offset=[CONTENTPLAYHEAD]]]></Tracking>
-                     </TrackingEvents>
-                     <CompanionClickThrough><![CDATA[mopubnativebrowser://navigate?url=http%3A%2F%2Fdev.cross-target.com%3A82%2Fmopub%2Fclick%3Fid%3D5a0a6e008967403976c30aba%26res%3Dc]]></CompanionClickThrough>
-                  </Companion>
-               </CompanionAds>
-            </Creative>
+            <Creative sequence="1" />
          </Creatives>
       </InLine>
    </Ad>

@@ -37,10 +37,6 @@ var VideoPlayer = function() {
   VideoPlayer.prototype.pause = function() {
     this.contentPlayer.pause();
   };
-
-  VideoPlayer.prototype.getDuration = function() {
-    this.contentPlayer.getDuration();
-  };
   
   VideoPlayer.prototype.isMobilePlatform = function() {
     return this.contentPlayer.paused &&

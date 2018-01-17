@@ -202,7 +202,6 @@ var Application = function() {
   Application.prototype.updateChrome_ = function() {
     if (this.playing_) {
       this.playButton_.textContent = 'II';
-      this.playTime_.textContent = this.videoPlayer_.getDuration();
     } else {
       // Unicode play symbol.
       this.playButton_.textContent = String.fromCharCode(9654);
