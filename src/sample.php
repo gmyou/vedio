@@ -87,7 +87,6 @@
     let isReached = false;
     setInterval(()=>{
         if ( typeof $('#adcontainer > video')[0] != "undefined" ) {
-            console.log($('#adcontainer > video')[0].currentTime);
             if ( $('#adcontainer > video')[0].currentTime == 0 ) return false;
             if ( $('#adcontainer > video')[0].currentTime > 4.9 && !isReached ) {
                 alert('Reached!');
@@ -96,7 +95,7 @@
                 t.innerText = $('#adcontainer > video')[0].currentTime;
             }
         }
-    }, 1000);
+    }, 500);
   });
   var application = null;
 
