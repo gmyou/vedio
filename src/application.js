@@ -12,6 +12,10 @@ var Application = function() {
         'click',
         this.bind_(this, this.requestVideoSample_),
         false);
+    document.getElementById('videoLinkWithVPAID').addEventListener(
+        'click',
+        this.bind_(this, this.requestVideoSampleVPAID_),
+        false);
     /*document.getElementById('nonLinearLink').addEventListener(
         'click',
         this.bind_(this, this.requestNonLinearSample_),
@@ -94,7 +98,10 @@ var Application = function() {
   };
   
   Application.prototype.requestVideoSample_ = function() {
-    // this.makeRequest_('VpaidVideoPlayerSample.xml');
+    this.makeRequest_('VpaidVideoPlayerSample.xml');
+  };
+  
+  Application.prototype.requestVideoSampleVPAID_ = function() {
     this.makeRequest_('VpaidVideoPlayerSample.vpaid.xml');
   };
   

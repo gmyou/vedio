@@ -67,6 +67,7 @@
 
     <center>
       <label for="tag">Video (<span id="videoLink" class="fakeLink">Sample</span>):&nbsp;</label>
+      <label for="tag">VideoWithVPAID (<span id="videoLinkWithVPAID" class="fakeLink">Sample</span>):&nbsp;</label>
       <label for="tag">Non Linear (<span id="nonLinearLink" class="fakeLink">Sample</span>):&nbsp;</label>
       <label for="tag">Testers Vpaid Ad (<span id="sampleLink" class="fakeLink">Sample</span>):&nbsp;</label>
       <textarea id="requestXMLInput" style="width:600px; height:200px;">&lt;VAST/&gt;</textarea>
