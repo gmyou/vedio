@@ -94,7 +94,8 @@ var Application = function() {
   };
   
   Application.prototype.requestVideoSample_ = function() {
-    this.makeRequest_('VpaidVideoPlayerSample.xml');
+    // this.makeRequest_('VpaidVideoPlayerSample.xml');
+    this.makeRequest_('VpaidVideoPlayerSample.vpaid.xml');
   };
   
   Application.prototype.requestNonLinearSample_ = function() {

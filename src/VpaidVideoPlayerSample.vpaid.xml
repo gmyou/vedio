@@ -27,12 +27,15 @@
                      <Tracking event="acceptInvitation">http://www.example.com/acceptInvitation</Tracking>
                      <Tracking event="progress" offset="00:00:15"><![CDATA[http://dev.cross-target.com:82/mopub/event?id=5a0a6e008967403976c30aba&et=progress&offset=[CONTENTPLAYHEAD]]]></Tracking>
                   </TrackingEvents>
+                  <AdParameters><![CDATA[{"videos":[
+ {"url":"http://d22e9nnpe1lnrt.cloudfront.net/mp4/119/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a/mp4_480_16X9_preset_id/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a.mp4","mimetype":"video/mp4"}],
+ "overlay":"http://ryanthompson591.github.io/vpaidExamples/img/ClickMe.jpg"}]]></AdParameters>
                   <VideoClicks>
                      <ClickThrough id="123">http://google.com</ClickThrough>
                      <ClickTracking id="123">http://www.example.com/click</ClickTracking>
                   </VideoClicks>
                   <MediaFiles>
-                     <MediaFile delivery="progressive" type="video/mp4" width="320" height="480"><![CDATA[http://d22e9nnpe1lnrt.cloudfront.net/mp4/119/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a/mp4_480_16X9_preset_id/b1df7ecb39d3841da727477ba8295deaaa940d1c28eb624751579c80f258a39a.mp4]]></MediaFile>
+                     <MediaFile apiFramework="VPAID" type="application/javascript">VpaidVideoAd.js</MediaFile>
                   </MediaFiles>
                </Linear>
             </Creative>
