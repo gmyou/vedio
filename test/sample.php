@@ -177,6 +177,9 @@
             ended = true;
             console.log('complete ', eventTracker['complete']);
         }
+        if ( currentTime == 0 && !ended ) {
+            console.log('rewind ', eventTracker['rewind']);
+        }
     };
 
     // creativeView
@@ -184,12 +187,14 @@
         console.log("CreativeView", eventTracker['creativeView']);
     };
 
-    // start
+    // start, resume
     let started = false;
     adVideo.onplaying = function() {
         if ( !started) {
             started = true;
             console.log("Start", eventTracker['start']);
+        } else {
+            console.log('resume ', eventTracker['resume']);
         }
     };
 
@@ -203,5 +208,12 @@
         if ( !adVideo.muted && muted ) {
             console.log('unmute ', eventTracker['unmute']);
         }
+    };
+
+    // pause, rewind
+    var paused = false;
+    adVideo.onpause = function() {
+        paused = true;
+        console.log('pause ', eventTracker['pause']);
     };
 </script>
