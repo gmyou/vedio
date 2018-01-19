@@ -3,8 +3,12 @@
 <video id="video" controls preload="auto" width="400" height="300">
     <source src="/asset/sample.mp4" type="video/mp4"></source>
 </video>
+
 <div id="ad" style="display:none"></div>
-<div id="adCurrentTime">0</div>
+
+<div>
+    <span id="adCurrentTime">0</span> / <span id="duration">0</span>
+</div>
 
 <script>
     var xml = `<VAST version="3.0">
@@ -68,6 +72,7 @@
         'start':'',
         'firstQuartile':'',
         'midpoint':'',
+        'thirdQuartile':'',
         'complete':'',
         'mute':'',
         'unmute':'',
@@ -82,6 +87,16 @@
         'closeLinear':'',
         'skip':'',
         'progress':''
+    };
+
+    // quarters
+    var quarters = {
+        'impression':0,
+        'start':0,
+        'firstQuartile':25,
+        'midpoint':50,
+        'thirdQuartile':75,
+        'complete':100
     };
 
     var parser = new DOMParser();
@@ -121,21 +136,46 @@
     var adVideo = document.getElementById("adVideo");
 
     // duration
-    var duration = 0;
+    var duration = 0, currentTime = 0;
     adVideo.onloadedmetadata = function() {
         duration = adVideo.duration;
+        document.getElementById("duration").innerHTML = '<strong>'+duration+'</strong>';
         console.log('onloadedmetadata.duration : ', duration);
     };
 
     // Progress Offset Time
-    let readched = false;
+    let readched = false, firstQuated = false, midpointed = false, thirdQuarted = false, ended = false;
     adVideo.ontimeupdate = function() {
-        if ( adVideo.currentTime >= offsetTime && !readched) {
-            document.getElementById("adCurrentTime").innerHTML = '<strong>'+adVideo.currentTime+'</strong>';
+        duration = adVideo.duration;
+        currentTime = adVideo.currentTime;
+
+        document.getElementById("duration").innerHTML = '<strong>'+duration+'</strong>';
+        if ( currentTime >= offsetTime && !readched) {
+            document.getElementById("adCurrentTime").innerHTML = '<strong>'+currentTime+'</strong>';
             readched = true;
             console.log('Reached Offset Time', eventTracker['progress']);
-        } else if ( !readched) {
-            document.getElementById("adCurrentTime").innerText = adVideo.currentTime;
+        } else {
+            document.getElementById("adCurrentTime").innerHTML = currentTime;
+        }
+
+        var firstQuartile = duration * quarters.firstQuartile / 100;
+        var midpoint = duration * quarters.midpoint / 100;
+        var thirdQuartile = duration * quarters.thirdQuartile / 100;
+        if ( currentTime >= firstQuartile && !firstQuated ) {
+            firstQuated = true;
+            console.log('firstQuartile ', eventTracker['firstQuartile']);
+        }
+        if ( currentTime >= midpoint && !midpointed ) {
+            midpointed = true;
+            console.log('midpoint ', eventTracker['midpoint']);
+        }
+        if ( currentTime >= thirdQuartile && !thirdQuarted ) {
+            thirdQuarted = true;
+            console.log('thirdQuartile ', eventTracker['thirdQuartile']);
+        }
+        if ( currentTime == duration && !ended ) {
+            ended = true;
+            console.log('complete ', eventTracker['complete']);
         }
     };
 
