@@ -4,6 +4,7 @@
     <source src="/asset/sample.mp4" type="video/mp4"></source>
 </video>
 <div id="ad" style="display:none"></div>
+<div id="adCurrentTime">0</div>
 
 <script>
     var xml = `<VAST version="3.0">
@@ -62,6 +63,27 @@
     </Ad>
     </VAST>`;
 
+    var eventTracker = {
+        'creativeView':'',
+        'start':'',
+        'firstQuartile':'',
+        'midpoint':'',
+        'complete':'',
+        'mute':'',
+        'unmute':'',
+        'pause':'',
+        'rewind':'',
+        'resume':'',
+        'fullscreen':'',
+        'expand':'',
+        'collapse':'',
+        'exitFullscreen':'',
+        'acceptInvitationLinear':'',
+        'closeLinear':'',
+        'skip':'',
+        'progress':''
+    };
+
     var parser = new DOMParser();
     var xmlDoc =  parser.parseFromString(xml,"text/xml");
     var mediaFile = xmlDoc.getElementsByTagName("MediaFile");
@@ -69,7 +91,7 @@
 
     var offsetTime = -1;
     for (let index = 0; index < tracking.length; index++) {
-        const element = tracking[index];
+        var element = tracking[index];
         if ( element.getAttribute("event") == 'progress' ) {
             var strOffsetTime = element.getAttribute("offset");
             var a = strOffsetTime.split(':'); // split it at the colons
@@ -77,15 +99,18 @@
             // minutes are worth 60 seconds. Hours are worth 60 minutes.
             var offsetTime = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
         }
+        if ( eventTracker.hasOwnProperty(element.getAttribute("event")) )
+            eventTracker[element.getAttribute("event")] = element.textContent;
     }
     console.log( 'Offset Time : ', offsetTime );
+    // console.log( 'eventTracker : ', eventTracker );
 
     var width = mediaFile[0].getAttribute("width");
     var height = mediaFile[0].getAttribute("height");
     var src = mediaFile[0].textContent;
 
     var v = `
-    <video id="adVedio" controls preload="auto" width="${width}" height="${height}">
+    <video id="adVideo" controls preload="auto" width="${width}" height="${height}">
        <source src="${src}" type="video/mp4"></source>
     </video>`;
 
@@ -93,13 +118,38 @@
     ad.innerHTML = v;
     ad.style.display = 'inline';
 
-    var adVedio = document.getElementById("adVedio");
+    var adVideo = document.getElementById("adVideo");
 
+    // duration
+    var duration = 0;
+    adVideo.onloadedmetadata = function() {
+        duration = adVideo.duration;
+        console.log('onloadedmetadata.duration : ', duration);
+    };
+
+    // Progress Offset Time
     let readched = false;
-    adVedio.ontimeupdate = function() {
-        if ( adVedio.currentTime >= offsetTime && !readched) {
+    adVideo.ontimeupdate = function() {
+        if ( adVideo.currentTime >= offsetTime && !readched) {
+            document.getElementById("adCurrentTime").innerHTML = '<strong>'+adVideo.currentTime+'</strong>';
             readched = true;
-            console.log('Reached!', adVedio.currentTime);
+            console.log('Reached Offset Time', eventTracker['progress']);
+        } else if ( !readched) {
+            document.getElementById("adCurrentTime").innerText = adVideo.currentTime;
+        }
+    };
+
+    // creativeView
+    adVideo.onloadeddata = function() {
+        console.log("CreativeView", eventTracker['creativeView']);
+    };
+
+    // start
+    let started = false;
+    adVideo.onplaying = function() {
+        if ( !started) {
+            started = true;
+            console.log("Start", eventTracker['start']);
         }
     };
 </script>
