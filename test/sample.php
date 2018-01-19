@@ -5,10 +5,8 @@
 </video>
 <div id="ad" style="display:none"></div>
 
-<script src="/asset/js/jquery.js"></script>
 <script>
-$(function() {
-    const xml = `<VAST version="3.0">
+    var xml = `<VAST version="3.0">
     <Ad id="456">
         <InLine>
             <AdSystem version="1.0"><![CDATA[CrossTarget]]></AdSystem>
@@ -64,47 +62,51 @@ $(function() {
     </Ad>
     </VAST>`;
 
-    const     xmlDoc = $.parseXML( xml ),
-                $xml = $( xmlDoc ),
-           MediaFile = $xml.find( "MediaFile" );
-            Tracking = $xml.find( "Tracking" );
+    var parser = new DOMParser();
+    var xmlDoc =  parser.parseFromString(xml,"text/xml");
+    var mediaFile = xmlDoc.getElementsByTagName("MediaFile");
+    var tracking = xmlDoc.getElementsByTagName("Tracking");
 
-
-    let offsetTime = -1;
-    $(Tracking).each(function(){
-        if ( 'progress' == $(this).attr('event') ) {
-            const strOffsetTime = $(this).attr('offset');
+    var offsetTime = -1;
+    for (let index = 0; index < tracking.length; index++) {
+        const element = tracking[index];
+        if ( element.getAttribute("event") == 'progress' ) {
+            var strOffsetTime = element.getAttribute("offset");
             offsetTime = parseInt(strOffsetTime.substring(strOffsetTime.length-2, strOffsetTime.length));
         }
-    });
-    console.log('offsetTime : ', offsetTime);
+    }
+    console.log( 'Offset Time : ', offsetTime );
 
-    const width = $(MediaFile[0]).attr('width');
-    const height = $(MediaFile[0]).attr('height');
-    const src = $(MediaFile[0]).text();
+    var width = mediaFile[0].getAttribute("width");
+    var height = mediaFile[0].getAttribute("height");
+    var src = mediaFile[0].textContent;
 
-    const v = `
+    var v = `
     <video id="adVedio" controls preload="auto" width="${width}" height="${height}">
        <source src="${src}" type="video/mp4"></source>
     </video>`;
 
-    $("#ad").html(v).show();
+    var ad = document.getElementById("ad");
+    ad.innerHTML = v;
+    ad.style.display = 'inline';
 
-    let isReached = false;
-    if (offsetTime != -1) {
-        setInterval(() => {
-            if ( typeof $('#adVedio')[0] != "undefined" ) {
-                
-                if ( $('#adVedio')[0].currentTime == 0 ) return false;
-                if ( $('#adVedio')[0].currentTime > offsetTime && !isReached ) {
-                    alert('Reached!');
-                    isReached = true;
-                } else if ( !isReached ) {
-                    console.log($('#adVedio')[0].currentTime);
+    var adVedio = document.getElementById("adVedio");
+    adVedio.onloadstart = function() {
+        let isReached = false;
+        if (offsetTime > -1 && true) {
+            var myVar = setInterval(function(){
+                if ( typeof adVedio != "undefined" ) {
+                    if ( adVedio.currentTime == 0 ) return false;
+                    if ( adVedio.currentTime > offsetTime && !isReached ) {
+                        alert('Reached!');
+                        isReached = true;
+                    } else if ( !isReached ) {
+                        console.log(adVedio.currentTime);
+                    } else if ( isReached ) {
+                        clearInterval(myVar);
+                    }
                 }
-    
-            }
-        }, 500)
+            }, 500);
+        }
     }
-});
 </script>
