@@ -192,4 +192,16 @@
             console.log("Start", eventTracker['start']);
         }
     };
+
+    // mute, unmute
+    var muted = false;
+    adVideo.onvolumechange = function() {
+        if ( adVideo.muted ) {
+            muted = true
+            console.log('mute ', eventTracker['mute']);
+        }
+        if ( !adVideo.muted && muted ) {
+            console.log('unmute ', eventTracker['unmute']);
+        }
+    };
 </script>
