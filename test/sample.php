@@ -72,7 +72,10 @@
         const element = tracking[index];
         if ( element.getAttribute("event") == 'progress' ) {
             var strOffsetTime = element.getAttribute("offset");
-            offsetTime = parseInt(strOffsetTime.substring(strOffsetTime.length-2, strOffsetTime.length));
+            var a = strOffsetTime.split(':'); // split it at the colons
+
+            // minutes are worth 60 seconds. Hours are worth 60 minutes.
+            var offsetTime = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
         }
     }
     console.log( 'Offset Time : ', offsetTime );
@@ -91,22 +94,12 @@
     ad.style.display = 'inline';
 
     var adVedio = document.getElementById("adVedio");
-    adVedio.onloadstart = function() {
-        let isReached = false;
-        if (offsetTime > -1 && true) {
-            var myVar = setInterval(function(){
-                if ( typeof adVedio != "undefined" ) {
-                    if ( adVedio.currentTime == 0 ) return false;
-                    if ( adVedio.currentTime > offsetTime && !isReached ) {
-                        alert('Reached!');
-                        isReached = true;
-                    } else if ( !isReached ) {
-                        console.log(adVedio.currentTime);
-                    } else if ( isReached ) {
-                        clearInterval(myVar);
-                    }
-                }
-            }, 500);
+
+    let readched = false;
+    adVedio.ontimeupdate = function() {
+        if ( adVedio.currentTime >= offsetTime && !readched) {
+            readched = true;
+            console.log('Reached!', adVedio.currentTime);
         }
-    }
+    };
 </script>
