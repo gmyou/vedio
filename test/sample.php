@@ -18,28 +18,33 @@
 </head>
 <body>
 
-<video id="video" controls preload="auto" width="400" height="300">
+<video id="video" preload="auto" width="400" height="300">
     <source src="/asset/sample.mp4" type="video/mp4"></source>
 </video>
 
 <div id="adLayout">
     <div id="ad" style="display:none"></div>
-    <div id="video-controls">
-        <button type="button" id="btnRewind">Rewind</button>
-        <button type="button" id="btnPlayPause">Play</button>
-        <input type="range" id="rngSeekBar" value="0">
-        <button type="button" id="btnMute">Mute</button>
-        <!-- <input type="range" id="rngVolume" min="0" max="1" step="0.1" value="1"> -->
-        <button type="button" id="btnExpandToggle">Expand</button>
-        <button type="button" id="btnFullscreen">Full-Screen</button>
-        <!-- <button type="button" id="btnInvitation">Invitation</button> -->
-        <button type="button" id="btnClose">Close</button>
-        <button type="button" id="btnSkip">Skip</button>
-    </div>
+</div>
+
+<div id="video-controls">
+    <button type="button" id="btnRewind">Rewind</button>
+    <button type="button" id="btnPlayPause">Play</button>
+    <input type="range" id="rngSeekBar" value="0">
+    <button type="button" id="btnMute">Mute</button>
+    <!-- <input type="range" id="rngVolume" min="0" max="1" step="0.1" value="1"> -->
+    <button type="button" id="btnExpandToggle">Expand</button>
+    <button type="button" id="btnFullscreen">Full-Screen</button>
+    <!-- <button type="button" id="btnInvitation">Invitation</button> -->
+    <button type="button" id="btnClose">Close</button>
+    <button type="button" id="btnSkip">Skip</button>
 </div>
 
 <div>
     <span id="adCurrentTime">0</span> / <span id="duration">0</span>
+</div>
+
+<div>
+    <span id="result"></span>
 </div>
 
 <script>
@@ -99,6 +104,15 @@
     </Ad>
     </VAST>`;
 
+    var adLayout = document.getElementById("adLayout");
+    function viewAd() {
+        adLayout.style.display = 'none';
+        document.getElementById("video").play();
+    }
+    function showLog(title, traker) {
+        document.getElementById("result").innerHTML = `<strong>${title}</strong>${traker}`;
+    }
+
     var eventTracker = {
         'creativeView':'',
         'start':'',
@@ -149,15 +163,15 @@
         if ( eventTracker.hasOwnProperty(element.getAttribute("event")) )
             eventTracker[element.getAttribute("event")] = element.textContent;
     }
-    console.log( 'Offset Time : ', offsetTime );
-    // console.log( 'eventTracker : ', eventTracker );
+    showLog( 'Offset Time', offsetTime );
+    // console.log( 'eventTracker :', eventTracker );
 
     var width = mediaFile[0].getAttribute("width");
     var height = mediaFile[0].getAttribute("height");
     var src = mediaFile[0].textContent;
 
     var v = `
-    <video id="adVideo" preload="auto" width="${width}" height="${height}">
+    <video id="adVideo" autoplay preload="auto" width="${width}" height="${height}">
        <source src="${src}" type="video/mp4"></source>
     </video>`;
 
@@ -165,14 +179,13 @@
     ad.innerHTML = v;
     ad.style.display = 'inline';
 
-    var adLayout = document.getElementById("adLayout");
     var adVideo = document.getElementById("adVideo");
 
     document.addEventListener("DOMContentLoaded", init, false);
     function init() {
         if ( adVideo ) {
             var impTracker = xmlDoc.getElementsByTagName("Impression")[0].textContent;
-            console.log("Impression", impTracker);
+            showLog("Impression", impTracker);
         }
     }
 
@@ -181,7 +194,7 @@
     adVideo.onloadedmetadata = function() {
         duration = adVideo.duration;
         document.getElementById("duration").innerHTML = '<strong>'+duration+'</strong>';
-        console.log('Onloadedmetadata.duration : ', duration);
+        showLog('Onloadedmetadata.duration :', duration);
     };
 
     // Progress Offset Time
@@ -194,7 +207,7 @@
         if ( currentTime >= offsetTime && !readched) {
             document.getElementById("adCurrentTime").innerHTML = '<strong>'+currentTime+'</strong>';
             readched = true;
-            console.log('Reached Offset Time', eventTracker['progress']);
+            showLog('Reached Offset Time', eventTracker['progress']);
         } else {
             document.getElementById("adCurrentTime").innerHTML = currentTime;
         }
@@ -204,33 +217,38 @@
         var thirdQuartile = duration * quarters.thirdQuartile / 100;
         if ( currentTime >= firstQuartile && !firstQuated ) {
             firstQuated = true;
-            console.log('FirstQuartile ', eventTracker['firstQuartile']);
+            showLog('FirstQuartile', eventTracker['firstQuartile']);
         }
         if ( currentTime >= midpoint && !midpointed ) {
             midpointed = true;
-            console.log('Midpoint ', eventTracker['midpoint']);
+            showLog('Midpoint', eventTracker['midpoint']);
         }
         if ( currentTime >= thirdQuartile && !thirdQuarted ) {
             thirdQuarted = true;
-            console.log('ThirdQuartile ', eventTracker['thirdQuartile']);
+            showLog('ThirdQuartile', eventTracker['thirdQuartile']);
         }
         if ( currentTime == duration && !ended ) {
             ended = true;
-            console.log('Complete ', eventTracker['complete']);
+            showLog('Complete', eventTracker['complete']);
         }
     };
 
     // creativeView
     adVideo.onloadeddata = function() {
-        console.log("CreativeView", eventTracker['creativeView']);
+        showLog("CreativeView", eventTracker['creativeView']);
     };
+
+    // end
+    adVideo.addEventListener('ended', function(){
+        viewAd();
+    });
 
     // start, resume
     let started = false;
     adVideo.onplaying = function() {
         if ( !started) {
             started = true;
-            console.log("Start", eventTracker['start']);
+            showLog("Start", eventTracker['start']);
         }
     };
 
@@ -239,23 +257,24 @@
     adVideo.onvolumechange = function() {
         if ( adVideo.muted ) {
             muted = true
-            console.log('Mute ', eventTracker['mute']);
+            showLog('Mute', eventTracker['mute']);
         }
         if ( !adVideo.muted && muted ) {
-            console.log('Unmute ', eventTracker['unmute']);
+            showLog('Unmute', eventTracker['unmute']);
         }
     };
 
     // pause
     adVideo.onpause = function() {
-        console.log('Pause ', eventTracker['pause']);
+        if (!ended)
+            showLog('Pause', eventTracker['pause']);
     };
 
     // rewind
     var btnRewind = document.getElementById("btnRewind");
     btnRewind.addEventListener('click', function(){
         adVideo.currentTime = 0;
-        console.log('Rewind ', eventTracker['rewind']);
+        showLog('Rewind', eventTracker['rewind']);
     });
 
     // expand, collapse
@@ -267,40 +286,38 @@
             adVideo.style.width = '100%';
             adVideo.style.height = height * adVideo.style.width/width;
             btnExpandToggle.innerText = 'Collapse';
-            console.log('Expand ', eventTracker['expand']);
+            showLog('Expand', eventTracker['expand']);
         } else {
             isExpanded = false;
             adVideo.style.width = width;
             btnExpandToggle.innerText = 'Expand';
-            console.log('Collapse ', eventTracker['collapse']);
+            showLog('Collapse', eventTracker['collapse']);
         }
     });
 
     // skip
     var btnSkip = document.getElementById("btnSkip");
     btnSkip.addEventListener('click', function(){
-        console.log('Skip ', eventTracker['skip']);
-        adLayout.style.display = 'none';
-        document.getElementById("video").play();
+        showLog('Skip', eventTracker['skip']);
+        viewAd();
     });
 
     // Invitation
     // var btnInvitation = document.getElementById("btnInvitation");
     // btnInvitation.addEventListener('click', function(){
-    //     console.log('AcceptInvitationLinear ', eventTracker['acceptInvitationLinear']);
+    //     showLog('AcceptInvitationLinear', eventTracker['acceptInvitationLinear']);
     // });
 
     // Close
     var btnClose = document.getElementById("btnClose");
     btnClose.addEventListener('click', function(){
-        console.log('Close ', eventTracker['closeLinear']);
-        adLayout.style.display = 'none';
-        document.getElementById("video").play();
+        showLog('Close', eventTracker['closeLinear']);
+        viewAd();
     });
 
     adVideo.addEventListener('click', function(){
         var vcTracker = xmlDoc.getElementsByTagName("Impression")[0].textContent;
-        console.log('VideoClick ', vcTracker);
+        showLog('VideoClick', vcTracker);
     });
 
     // Close
@@ -330,6 +347,12 @@
             adVideo.muted = true;
         }
     }, false);
+ 
+    //  any video error will fail with message 
+    adVideo.addEventListener("error", function (err) {
+        var errorTracker = xmlDoc.getElementsByTagName("Error")[0].textContent;
+        showLog('Error', errorTracker);
+    }, true);
 
     // fullscreen
     var isFullscreen = false;
@@ -340,30 +363,25 @@
     function fullScreenHandler() {
         if ( !isFullscreen ) {
             isFullscreen = true;
-            console.log('Fullscreen ', eventTracker['fullscreen']);
+            showLog('Fullscreen', eventTracker['fullscreen']);
         } else {
             isFullscreen = false;
-            console.log('ExitFullscreen ', eventTracker['exitFullscreen']);
+            showLog('ExitFullscreen', eventTracker['exitFullscreen']);
         }
     }
 
     var btnFullscreen = document.getElementById("btnFullscreen");
     btnFullscreen.addEventListener("click", function (evt) {
-        if (adVideo.requestFullscreen) {
-            adVideo.requestFullscreen();
-        } else if (adVideo.mozRequestFullScreen) {
-            adVideo.mozRequestFullScreen();
-        } else if (adVideo.webkitRequestFullscreen) {
-            adVideo.webkitRequestFullscreen();
+        showLog( adLayout.style.display );
+        var video = ( adLayout.style.display=='none' ) ? document.getElementById("video") : adVideo;
+        if (video.requestFullscreen) {
+            video.requestFullscreen();
+        } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+        } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
         }
-    }, false);    
-
-    //  any video error will fail with message 
-    adVideo.addEventListener("error", function (err) {
-        var errorTracker = xmlDoc.getElementsByTagName("Error")[0].textContent;
-        console.log('Error ', errorTracker);
-    }, true);
-
+    }, false);   
 
 </script>
 
