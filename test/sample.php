@@ -141,7 +141,7 @@
     ad.innerHTML = v;
     ad.style.display = 'inline';
 
-    var adVideo = document.getElementById("adVideo");
+    var adVideo = document.getElementById("adVideo");   
 
     // duration
     var duration = 0, currentTime = 0;
@@ -262,4 +262,12 @@
         adVideo.style.display = 'none';
         document.getElementById("video").play();
     });
+
+    adVideo.addEventListener("error", function (err) {
+        var errorTracker = xmlDoc.getElementsByTagName("MediaFile").textContent;
+        console.log(err);
+        console.log('error ', errorTracker);
+    }, true);
+
+
 </script>
