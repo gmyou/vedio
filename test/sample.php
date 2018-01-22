@@ -1,10 +1,18 @@
-<link href="http://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet">
- 
 <video id="video" controls preload="auto" width="400" height="300">
     <source src="/asset/sample.mp4" type="video/mp4"></source>
 </video>
 
 <div id="ad" style="display:none"></div>
+
+<div id="video-controls">
+    <button type="button" id="btnPlayPause">Play</button>
+    <input type="range" id="rngSeekBar" value="0">
+    <button type="button" id="btnMute">Mute</button>
+    <input type="range" id="rngVolume" min="0" max="1" step="0.1" value="1">
+    <button type="button" id="btnExpandToggle">Expand</button>
+    <button type="button" id="btnFullscreen">Full-Screen</button>
+    <button type="button" id="btnSkip">Skip</button>
+</div>
 
 <div>
     <span id="adCurrentTime">0</span> / <span id="duration">0</span>
@@ -143,7 +151,7 @@
         console.log('onloadedmetadata.duration : ', duration);
     };
 
-    // Progress Offset Time
+    // Progress Offset Time, rewind
     let readched = false, firstQuated = false, midpointed = false, thirdQuarted = false, ended = false;
     adVideo.ontimeupdate = function() {
         duration = adVideo.duration;
@@ -210,10 +218,48 @@
         }
     };
 
-    // pause, rewind
-    var paused = false;
+    // pause
     adVideo.onpause = function() {
-        paused = true;
         console.log('pause ', eventTracker['pause']);
     };
+
+    // fullscreen
+    var isFullscreen = false;
+    adVideo.addEventListener('webkitfullscreenchange', fullScreenHandler);
+    adVideo.addEventListener('mozfullscreenchange', fullScreenHandler);
+    adVideo.addEventListener('msfullscreenchange', fullScreenHandler);
+    adVideo.addEventListener('fullscreenchange', fullScreenHandler);
+    function fullScreenHandler() {
+        if ( !isFullscreen ) {
+            isFullscreen = true;
+            console.log('fullscreen ', eventTracker['fullscreen']);
+        } else {
+            isFullscreen = false;
+            console.log('exitFullscreen ', eventTracker['exitFullscreen']);
+        }
+    }
+
+    // expand, collapse
+    var isExpanded = false;
+    var btnExpandToggle = document.getElementById("btnExpandToggle");
+    btnExpandToggle.addEventListener('click', function(){
+        if ( !isExpanded ) {
+            isExpanded = true;
+            adVideo.style.width = '100%';
+            btnExpandToggle.innerText = 'Collapse';
+            console.log('expand ', eventTracker['expand']);
+        } else {
+            isExpanded = false;
+            adVideo.style.width = width;
+            btnExpandToggle.innerText = 'Expand';
+            console.log('collapse ', eventTracker['collapse']);
+        }
+    });
+
+    // skip
+    var btnSkip = document.getElementById("btnSkip");
+    btnSkip.addEventListener('click', function(){
+        adVideo.style.display = 'none';
+        document.getElementById("video").play();
+    });
 </script>
