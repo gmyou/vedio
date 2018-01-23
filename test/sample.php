@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<video id="video" preload="auto" width="400" height="300">
+<video id="video" webkit-playsinline playsinline x-webkit-airplay="allow" preload="auto" width="400" height="300">
     <source src="/asset/sample.mp4" type="video/mp4"></source>
 </video>
 
@@ -30,7 +30,7 @@
     <button type="button" id="btnRewind">Rewind</button>
     <button type="button" id="btnPlayPause">Play</button>
     <input type="range" id="rngSeekBar" value="0">
-    <button type="button" id="btnMute">Mute</button>
+    <button type="button" id="btnMute">Unmute</button>
     <!-- <input type="range" id="rngVolume" min="0" max="1" step="0.1" value="1"> -->
     <button type="button" id="btnExpandToggle">Expand</button>
     <button type="button" id="btnFullscreen">Full-Screen</button>
@@ -107,10 +107,12 @@
     var adLayout = document.getElementById("adLayout");
     function viewAd() {
         adLayout.style.display = 'none';
+        adLayout.style.zIndex = "-1";
         document.getElementById("video").play();
     }
     function showLog(title, traker) {
-        document.getElementById("result").innerHTML = `<strong>${title}</strong>${traker}`;
+        var rlt = `<strong>${title}</strong> ${traker}<br>`;
+        document.getElementById("result").innerHTML += rlt;
     }
 
     var eventTracker = {
@@ -171,7 +173,7 @@
     var src = mediaFile[0].textContent;
 
     var v = `
-    <video id="adVideo" autoplay preload="auto" width="${width}" height="${height}">
+    <video id="adVideo" webkit-playsinline playsinline x-webkit-airplay="allow" muted autoplay preload="auto" width="${width}" height="${height}">
        <source src="${src}" type="video/mp4"></source>
     </video>`;
 
@@ -180,12 +182,20 @@
     ad.style.display = 'inline';
 
     var adVideo = document.getElementById("adVideo");
+    var btnPlayPause = document.getElementById("btnPlayPause");
 
     document.addEventListener("DOMContentLoaded", init, false);
     function init() {
         if ( adVideo ) {
             var impTracker = xmlDoc.getElementsByTagName("Impression")[0].textContent;
             showLog("Impression", impTracker);
+            if ( adVideo.paused ) {
+                btnPlayPause.innerText = 'Pause';
+                btnPlayPause.click();
+            }
+        } else {
+            var errTracker = xmlDoc.getElementsByTagName("Error")[0].textContent;
+            showLog("Error", errTracker);
         }
     }
 
@@ -230,6 +240,7 @@
         if ( currentTime == duration && !ended ) {
             ended = true;
             showLog('Complete', eventTracker['complete']);
+            viewAd();
         }
     };
 
@@ -321,7 +332,6 @@
     });
 
     // Close
-    var btnPlayPause = document.getElementById("btnPlayPause");
     btnPlayPause.addEventListener('click', function(){
         if ( adVideo.paused ) {
             btnPlayPause.innerText = 'Pause';
