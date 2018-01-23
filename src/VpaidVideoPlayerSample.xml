@@ -3,8 +3,8 @@
    <Ad id="1234567">
       <InLine>
          <AdSystem>GDFP</AdSystem>
-         <AdTitle>Linear VPAID Example</AdTitle>
-         <Description>Vpaid Linear Video Ad</Description>
+         <AdTitle>Linear Non VPAID Example</AdTitle>
+         <Description>Non Vpaid Linear Video Ad</Description>
          <Error>http://www.example.com/error</Error>
          <Impression>http://www.example.com/impression</Impression>
          <Creatives>
