@@ -47,6 +47,7 @@
 
 * More tracking events: 일부 추적 이벤트 및 속성이 추가되어 게재 된 광고에 대한 세부 정보를 제공하고 건너 뛸 수있는 광고와 같은 새로운 광고 형식을 지원합니다.
 
+[Read More](https://github.com/gmyou/video/wiki#vast-v30)
 
 ## VPAID
 * Version 2.0
