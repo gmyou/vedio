@@ -18,15 +18,15 @@
 
 
 가이드 라인
-1. Video Ad Measurement Guidelines (VAMG): Outlines how events should be tracked.
-2. Video Ad Serving Template (VAST): Enables the common structure of a video ad response sent from an ad server to a video player.
-3. Video Player Ad Interface Definition (VPAID): Establishes the communication protocol between an interactive ad and the video player that is rendering it.
-4. Video Multi Ads Playlist (VMAP): Enable a structure for a playlist of video ads sent from an adserver to a video player.
-5. Digital Video Ad Format Guidelines and Best Practices: Outlines the general format and best practices that video ads should adhere to for the best advertising experience.
-6. Digital Video In-Stream Ad Metrics Definitions: Defines industry-accepted metrics for measuring video ad effectiveness.
+1. Video Ad Measurement Guidelines (VAMG): 이벤트를 추적하는 방법을 설명합니다.
+2. Video Ad Serving Template (VAST): 광고 서버에서 동영상 플레이어로 전송되는 동영상 광고 응답의 일반적인 구조를 사용합니다.
+3. Video Player Ad Interface Definition (VPAID): 대화 형 광고와 그것을 렌더링하는 비디오 플레이어 사이에 통신 프로토콜을 설정합니다.
+4. Video Multi Ads Playlist (VMAP): 광고 서버에서 동영상 플레이어로 전송 된 동영상 광고의 재생 목록에 대한 구조를 사용합니다.
+5. Digital Video Ad Format Guidelines and Best Practices: 최상의 광고 환경을 위해 비디오 광고가 준수해야하는 일반적인 형식 및 우수 사례에 대해 설명합니다.
+6. Digital Video In-Stream Ad Metrics Definitions: 비디오 광고 효과를 측정하기위한 업계에서 인정하는 지표를 정의합니다.
+
+![diagram](https://raw.githubusercontent.com/gmyou/video/master/asset/readme/1-1.png)
 
 
-
-
-## VPADID
+## VPAID
 * Version 2.0
