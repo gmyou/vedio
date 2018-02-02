@@ -74,11 +74,29 @@ VPAID를 사용하여 IAB는 게시자, 광고주 판매자에게 다음과 같�
 ![](https://github.com/gmyou/video/blob/master/asset/vpaid/1.1.png?raw=true)
 
 ### 변경점
-VPAID 1.0 enabled cross-platform support for rich in-stream video ads. As VPAID acceptance has begun to permeate the industry, VPAID 2.0 brings enhancements and additions that provide support for more interactive capabilities and improved reporting.
 
-Updates in VPAID 2.0 are summarized below:
+* Document Rewrite: VPAID 2.0의 내용이 가능한 경우 설명의 흐름을 개선하고 비 기술적 인 독자에게 VPAID를 이해하도록 권한을 부여하면서 재구성 및 간소화되었습니다.
+* VPAID and VAST: 유효한 VPAID 개체는 IAST 동영상 광고 게재 템플릿 (VAST)과 함께 사용할 수 있으며 VAST 및 VPAID 지원 동영상 플레이어에서 VPAID 프로토콜을 포함하는 VAST 광고를 재생할 수 있으므로 적극 권장합니다. VPAID 2.0에는 VAST 광고 단위에서 VPAID 프로토콜을 사용하는 방법에 대한 세부 정보가 포함되어 있습니다.
+* Support for HTML 5: HTML 5는 최신 멀티미디어 경향에 대한 플랫폼 간 / 장치 간 지원을 가능하게하는 신흥 웹 구문입니다. VPAID의 HTML 5 사용에 대한 세부 정보는이 업데이트에 포함되어 있습니다. 자세한 내용은 8 절을 참조하십시오..
+* Technical feature updates: 고급 디스플레이 및보고를 위해 추가 된 기능을 지원하기 위해이 업데이트에서 다음 속성, 메서드 및 전달 된 이벤트가 추가되거나 변경되었습니다.
 
-* Document Rewrite: The content in VPAID 2.0 has been reorganized and simplified where possible to improve the flow of explanations, while also empowering non- technical readers to understand VPAID.
-* VPAID and VAST: A valid VPAID object can be used in conjunction with the IAB Video Ad-Serving Template (VAST) and is highly recommended, as VAST ads that include VPAID protocols can play in both VAST and VPAID-enabled video players. VPAID 2.0 includes details about how to use VPAID protocols in a VAST ad unit.
-* Support for HTML 5: HTML 5 is an emerging Web syntax that has the potential to enable cross-platform/cross-device support for the latest trends in multimedia. Details for HTML 5 use of VPAID are included in this update. See Section 8 for details.
-* Technical feature updates: In order to support added features for advanced display and reporting, the following properties, methods and dispatched events have been added or changed in this update:
+  * Methods
+    * resizeAd(): clarification has been added about how to use this method in fullscreen mode
+    * skipAd(): added to enable the video player to include controls for allowing its audience to skip ads. The new AdSkipped event is dispatched by the ad unit in response to this call.
+    
+  * Properties
+    * adLinear: clarification added to indicate when the property should be used
+    * adWidth: added to provide current width of ad unit after ad has resized
+    * adHeight: added to provide current height of ad unit after ad has resized
+    * adDuration: reports total duration to more clearly report on the changing duration, which is confusing when both remaining time and duration can change
+    * adCompanions: included to support ad companions in VPAID, when companion information is not available until after the VPAID .swf file has already loaded.
+    * adIcons: included to support various industry programs which require the overlay of icons on the ad.
+    * adSkippableState: in support of skippable ads, this feature enables the video player to identify when the ad is in a state where it can be skipped.
+    
+  * Dispatched Events
+    * AdStopped: clarification added to indicate that the AdStopped event is to be used as a response to stopAd() (or dispatched when the ad has stopped itself) rather than as a request to the video player to call stopAd().
+    * AdSizeChange: added to enable confirmation to a resizeAd() method call from the video player
+    * AdDurationChange: instead of reporting AdRemainingTimeChange, AdDurationChange reports changes on the total duration that can change with user interaction. In the event of an AdDurationChange, both adRemainingTime and adDuration properties are updated
+    * AdInteraction: added to capture users’ interactions with the ad other than the ClickThru events.
+    * AdSkipped: added to support ads that include skip controls. This event can be triggered by controls in the ad unit or in response to the video player calling the skipAd() method.
+    * AdSkippableStateChange: added to support skippable ads, this event enables the ad unit to report when the ad is in a skippable state
