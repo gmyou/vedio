@@ -72,3 +72,13 @@ VPAID를 사용하여 IAB는 게시자, 광고주 판매자에게 다음과 같�
 동영상 플레이어의 인터랙티브 광고 경험을 향상 시키려면이 문서에서 설명하는 VPAID 사양에 동영상 플레이어를 포함해야합니다. 이러한 사양은 창의성과 혁신 성을 염두에 정의되어 있으며, 비디오 플레이어의 디자인을 제한하는 것은 아닙니다.
 
 ![](https://github.com/gmyou/video/blob/master/asset/vpaid/1.1.png?raw=true)
+
+### 변경점
+VPAID 1.0 enabled cross-platform support for rich in-stream video ads. As VPAID acceptance has begun to permeate the industry, VPAID 2.0 brings enhancements and additions that provide support for more interactive capabilities and improved reporting.
+
+Updates in VPAID 2.0 are summarized below:
+
+* Document Rewrite: The content in VPAID 2.0 has been reorganized and simplified where possible to improve the flow of explanations, while also empowering non- technical readers to understand VPAID.
+* VPAID and VAST: A valid VPAID object can be used in conjunction with the IAB Video Ad-Serving Template (VAST) and is highly recommended, as VAST ads that include VPAID protocols can play in both VAST and VPAID-enabled video players. VPAID 2.0 includes details about how to use VPAID protocols in a VAST ad unit.
+* Support for HTML 5: HTML 5 is an emerging Web syntax that has the potential to enable cross-platform/cross-device support for the latest trends in multimedia. Details for HTML 5 use of VPAID are included in this update. See Section 8 for details.
+* Technical feature updates: In order to support added features for advanced display and reporting, the following properties, methods and dispatched events have been added or changed in this update:
