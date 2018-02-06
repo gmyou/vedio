@@ -10,12 +10,6 @@
     <script src="/asset/js/video.js"></script>
 </head>
 <body>
-    <?= time() ?>
-    <?= var_dump(time()) ?>
-    <?php
-    $date = date_create();
-    echo date_timestamp_get($date)
-    ?>
     <div class="videoContainer">
         <video id="myVideo" controls preload="auto" width="580" >
             <source src="/asset/sample.mp4" type="video/mp4" />
