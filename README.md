@@ -81,22 +81,22 @@ VPAID를 사용하여 IAB는 게시자, 광고주 판매자에게 다음과 같�
 * Technical feature updates: 고급 디스플레이 및보고를 위해 추가 된 기능을 지원하기 위해이 업데이트에서 다음 속성, 메서드 및 전달 된 이벤트가 추가되거나 변경되었습니다.
 
   * Methods
-    * resizeAd(): clarification has been added about how to use this method in fullscreen mode
-    * skipAd(): added to enable the video player to include controls for allowing its audience to skip ads. The new AdSkipped event is dispatched by the ad unit in response to this call.
+    * resizeAd(): 전체 화면 모드에서이 방법을 사용하는 방법에 대한 설명이 추가되었습니다.
+    * skipAd(): 동영상 플레이어에서 잠재 고객이 광고를 건너 뛸 수 있도록하는 컨트롤을 포함 할 수 있도록 추가되었습니다. 새 AdSkipped 이벤트는이 호출에 대한 응답으로 광고 단위에 의해 전달됩니다.
     
   * Properties
-    * adLinear: clarification added to indicate when the property should be used
-    * adWidth: added to provide current width of ad unit after ad has resized
-    * adHeight: added to provide current height of ad unit after ad has resized
-    * adDuration: reports total duration to more clearly report on the changing duration, which is confusing when both remaining time and duration can change
-    * adCompanions: included to support ad companions in VPAID, when companion information is not available until after the VPAID .swf file has already loaded.
-    * adIcons: included to support various industry programs which require the overlay of icons on the ad.
-    * adSkippableState: in support of skippable ads, this feature enables the video player to identify when the ad is in a state where it can be skipped.
+    * adLinear: 그 속성이 언제 사용되어야하는지 알려주는 명확한 설명
+    * adWidth: 광고 크기가 조정 된 후 광고 단위의 현재 너비를 제공하기 위해 추가되었습니다.
+    * adHeight: 광고 크기를 조정 한 후 광고 단위의 현재 높이 제공
+    * adDuration: 변화하는 기간에 대해보다 명확하게보고하기 위해 총 지속 시간을보고합니다. 남은 시간과 지속 시간이 바뀔 수있는 경우 혼란 스럽습니다.
+    * adCompanions: VPAID .swf 파일이 이미로드 될 때까지 컴패니언 정보를 사용할 수없는 경우 VPAID의 광고 컴패니언을 지원하기 위해 포함됩니다.
+    * adIcons: 광고에 오버레이 아이콘이 필요한 다양한 산업 프로그램을 지원하기 위해 포함되었습니다.
+    * adSkippableState: 건너 뛸 수있는 광고를 지원하기 때문에이 기능을 사용하면 동영상 플레이어는 광고가 건너 뛸 수있는 상태를 확인할 수 있습니다.
     
   * Dispatched Events
-    * AdStopped: clarification added to indicate that the AdStopped event is to be used as a response to stopAd() (or dispatched when the ad has stopped itself) rather than as a request to the video player to call stopAd().
-    * AdSizeChange: added to enable confirmation to a resizeAd() method call from the video player
-    * AdDurationChange: instead of reporting AdRemainingTimeChange, AdDurationChange reports changes on the total duration that can change with user interaction. In the event of an AdDurationChange, both adRemainingTime and adDuration properties are updated
-    * AdInteraction: added to capture users’ interactions with the ad other than the ClickThru events.
-    * AdSkipped: added to support ads that include skip controls. This event can be triggered by controls in the ad unit or in response to the video player calling the skipAd() method.
-    * AdSkippableStateChange: added to support skippable ads, this event enables the ad unit to report when the ad is in a skippable state
+    * AdStopped: 광고 플레이어가 stopAd ()를 호출하기위한 요청이 아닌 stopS ()에 대한 응답으로 AdStopped 이벤트가 사용되거나 (광고가 중단되었을 때 전달되는) AdStopped 이벤트를 나타내는 설명이 추가되었습니다.
+    * AdSizeChange: 비디오 플레이어에서 resizeAd () 메서드 호출에 대한 확인을 사용하도록 추가되었습니다.
+    * AdDurationChange: AdRemainingTimeChange를보고하는 대신 AdDurationChange는 사용자 상호 작용에 따라 변경 될 수있는 총 기간에 대한 변경 사항을보고합니다. AdDurationChange 이벤트의 경우 adRemainingTime 및 adDuration 속성이 모두 업데이트됩니다.
+    * AdInteraction: ClickThru 이벤트 이외의 다른 사용자와의 상호 작용을 캡처하기 위해 추가되었습니다.
+    * AdSkipped: 건너 뛰기 컨트롤을 포함하는 광고를 지원하기 위해 추가되었습니다. 이 이벤트는 광고 단위의 컨트롤이나 skipAd () 메소드를 호출하는 동영상 플레이어에 대한 응답으로 트리거 될 수 있습니다.
+    * AdSkippableStateChange: 건너 뛸 수있는 광고를 지원하기 위해이 이벤트를 추가하면 광고가 건너 뛸 수있는 상태에있을 때 광고 단위에서보고 할 수 있습니다.
