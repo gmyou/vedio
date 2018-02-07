@@ -126,7 +126,8 @@ can interact with
   * The example illustrates how callback can be registered with the creative.
 
 ```javascript
-    // This class is meant to be part of the video player that interacts with the Ad. // It takes the VPAID creative as a parameter in its contructor. VPAIDWrapper = function(VPAIDCreative) {
+// This class is meant to be part of the video player that interacts with the Ad. // It takes the VPAID creative as a parameter in its contructor. 
+VPAIDWrapper = function(VPAIDCreative) {
     this._creative = VPAIDCreative;
     if (!this.checkVPAIDInterface(VPAIDCreative)) {
         //The VPAIDCreative doesn't conform to the VPAID spec
@@ -316,7 +317,7 @@ can interact with
     };
     // Callback for AdVolumeChange 
     VPAIDWrapper.prototype.onAdVolumeChange = function() {
-        console.log("Ad Volume has changed to - " + this._creative.getAdVolume());.
+        console.log("Ad Volume has changed to - " + this._creative.getAdVolume());
     };
     //Passthrough for resizeAd 
     VPAIDWrapper.prototype.resizeAd = function(width, height, viewMode) {
@@ -338,4 +339,5 @@ can interact with
     VPAIDWrapper.prototype.collapseAd = function() {
         this._creative.collapseAd();
     };
+}
 ```

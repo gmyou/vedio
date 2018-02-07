@@ -6,12 +6,11 @@
     <title>Video Player</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="/asset/css/video.css" />
-    <script src="/asset/js/jquery.js"></script>
-    <script src="/asset/js/video.js"></script>
+    <script src="interface.js"></script>
 </head>
 <body>
-    <div class="videoContainer">
-        <video id="myVideo" controls preload="auto" width="580" >
+    <div id="mySlot" class="videoContainer">
+        <video id="myVideoSlot" controls preload="auto" width="580" >
             <source src="/asset/sample.mp4" type="video/mp4" />
             <p>Your browser does not support the video tag.</p>
         </video>
@@ -30,5 +29,27 @@
             </div>
         </div>
     </div>
+    <script>
+    iframe = document.createElement('iframe');
+    iframe.id = "adloaderframe";
+    document.body.appendChild(iframe);
+
+    // ‘url’ points to the ad js file
+    url = 'implemet.js';
+    iframe.contentWindow.document.write('<script src="' + url + '"></scr' + 'ipt>'); 
+    var fn = iframe.contentWindow['getVPAIDAd'];
+    if (fn && typeof fn == 'function') { 
+        VPAIDCreative = fn();
+        VPAIDCreative._slot = document.getElementById('mySlot');
+        VPAIDCreative._videoSlot = document.getElementById('myVideoSlot');
+        // function (width, height, viewMode, desiredBitrate, creativeData, environmentVars) {
+        VPAIDCreative.initAd(400, 300, 'normal', 256, '/src/vpaid/android.mp4', {
+            slot : VPAIDCreative._slot,
+            videoSlot : VPAIDCreative._videoSlot,
+        });
+        VPAIDCreative.startAd();
+        console.log(VPAIDCreative);
+    }
+    </script>
 </body>
 </html>
