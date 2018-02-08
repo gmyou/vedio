@@ -79,9 +79,10 @@ header("Pragma: no-cache");
     var MediaFile = xmlDoc.getElementsByTagName("MediaFile");
 
     var _creativeData = {AdParameters : adParameters[0].textContent};
-    console.log(_creativeData['AdParameters']);
     var _vpAidJS = MediaFile[0].textContent;
-    
+    console.log(_creativeData['AdParameters']);
+    console.log(_vpAidJS);
+
 
     var iframe = document.createElement('iframe');
     iframe.id = "adloaderframe";
@@ -91,26 +92,37 @@ header("Pragma: no-cache");
     document.body.appendChild(iframe);
 
     iframe.contentWindow.document.write('<script src="' + _vpAidJS + '"></scr' + 'ipt>'); 
-    iframe.contentWindow.document.write('<div id="adSlot"><video id="adVideoSlot" controls preload="auto" width="580" ></div>'); 
+    iframe.contentWindow.document.write('<div id="adSlot"><video id="adVideoSlot" controls preload="auto" width="580" /></div>'); 
 
-    // iframe.contentWindow.document.addEventListener("DOMContentLoaded", init, false);
-    // function init() {
-        var fn = iframe.contentWindow['getVPAIDAd'];
-        if (fn && typeof fn == 'function') {
-            VPAIDCreative = fn();
-            VPAIDCreative._slot = iframe.contentWindow.document.getElementById('adSlot');
-            VPAIDCreative._videoSlot = iframe.contentWindow.document.getElementById('adVideoSlot');
-            
-            VPAIDCreative.initAd(580, 400, 'normal', 256, _creativeData, {
-                slot : VPAIDCreative._slot,
-                videoSlot : VPAIDCreative._videoSlot,
-            });
 
-            VPAIDCreative.startAd();
+    var fn = iframe.contentWindow['getVPAIDAd'];
+    if (fn && typeof fn == 'function') {
+        VPAIDCreative = fn();
+        VPAIDCreative._slot = iframe.contentWindow.document.getElementById('adSlot');
+        VPAIDCreative._videoSlot = iframe.contentWindow.document.getElementById('adVideoSlot');
+        
+        VPAIDCreative.initAd(580, 400, 'normal', 256, _creativeData, {
+            slot : VPAIDCreative._slot,
+            videoSlot : VPAIDCreative._videoSlot,
+        });
 
-            console.log(VPAIDCreative);
-        }
-    // }
+        VPAIDCreative.startAd();
+
+        console.log(VPAIDCreative.getAdLinear());
+        console.log(VPAIDCreative.getAdWidth());
+        console.log(VPAIDCreative.getAdHeight());
+        console.log(VPAIDCreative.getAdExpanded());
+        console.log(VPAIDCreative.getAdSkippableState());
+        console.log(VPAIDCreative.getAdRemainingTime());
+        console.log(VPAIDCreative.getAdDuration());
+        console.log(VPAIDCreative.getAdVolume());
+        VPAIDCreative.setAdVolume(0.5);
+        console.log(VPAIDCreative.getAdVolume());
+        console.log(VPAIDCreative.getAdCompanions());
+        console.log(VPAIDCreative.getAdIcons());
+
+        console.log(VPAIDCreative);
+    }
     </script>
 </body>
 </html>
