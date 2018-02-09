@@ -94,10 +94,33 @@ header("Pragma: no-cache");
     iframe.contentWindow.document.write('<script src="' + _vpAidJS + '"></scr' + 'ipt>'); 
     iframe.contentWindow.document.write('<div id="adSlot"><video id="adVideoSlot" controls preload="auto" width="580" /></div>'); 
 
-
     var fn = iframe.contentWindow['getVPAIDAd'];
     if (fn && typeof fn == 'function') {
+        
         VPAIDCreative = fn();
+
+        var eventsCallbacks = [
+            'AdLoaded',
+            'AdDurationChange',
+            'AdError',
+            'AdStarted',
+            'AdStopped',
+            'AdSizeChange',
+            'AdPaused',
+            'AdPlaying',
+            'AdExpanded',
+            'AdSkipped',
+            'AdVolumeChange'
+        ];
+
+        for (let index = 0; index < eventsCallbacks.length; index++) {
+            const element = eventsCallbacks[index];
+            console.log(element);
+            VPAIDCreative.eventsCallbacks_[element] = function() {
+                console.log('CallBack: ', element);
+            }
+        }
+
         VPAIDCreative._slot = iframe.contentWindow.document.getElementById('adSlot');
         VPAIDCreative._videoSlot = iframe.contentWindow.document.getElementById('adVideoSlot');
         
@@ -108,21 +131,20 @@ header("Pragma: no-cache");
 
         VPAIDCreative.startAd();
 
-        console.log(VPAIDCreative.getAdLinear());
-        console.log(VPAIDCreative.getAdWidth());
-        console.log(VPAIDCreative.getAdHeight());
-        console.log(VPAIDCreative.getAdExpanded());
-        console.log(VPAIDCreative.getAdSkippableState());
-        console.log(VPAIDCreative.getAdRemainingTime());
-        console.log(VPAIDCreative.getAdDuration());
-        console.log(VPAIDCreative.getAdVolume());
-        VPAIDCreative.setAdVolume(0.5);
-        console.log(VPAIDCreative.getAdVolume());
-        console.log(VPAIDCreative.getAdCompanions());
-        console.log(VPAIDCreative.getAdIcons());
+        VPAIDCreative._videoSlot.onpause = function() {
+            VPAIDCreative.pauseAd();
+        };
 
-        console.log(VPAIDCreative);
+        VPAIDCreative._videoSlot.onvolumechange = function() {
+            VPAIDCreative.setAdVolume(this.volume);
+        };
+
+        VPAIDCreative._videoSlot.onplaying = function() {
+            VPAIDCreative.resumeAd();
+        };
+
     }
+
     </script>
 </body>
 </html>
