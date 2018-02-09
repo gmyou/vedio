@@ -30,7 +30,7 @@ header("Pragma: no-cache");
      * @todo request remote xml
      * 
      * */
-    var vast = `<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
+    var xmlString = `<VAST xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vast.xsd" version="3.0">
    <Ad id="1234567">
       <InLine>
          <AdSystem>GDFP</AdSystem>
@@ -73,13 +73,17 @@ header("Pragma: no-cache");
    </Ad>
 </VAST>`;
 
-    var parser = new DOMParser();
-    var xmlDoc =  parser.parseFromString(vast,"text/xml");
-    var adParameters = xmlDoc.getElementsByTagName("AdParameters");
-    var MediaFile = xmlDoc.getElementsByTagName("MediaFile");
+    var doc = new DOMParser().parseFromString(xmlString,'text/xml');
 
-    var _creativeData = {AdParameters : adParameters[0].textContent};
-    var _vpAidJS = MediaFile[0].textContent;
+    function getElementByXpath(path, doc) {
+        return doc.evaluate(path, doc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    }
+
+    var adParameters = getElementByXpath("//AdParameters", doc);
+    var MediaFile = getElementByXpath("//MediaFile[@apiFramework='VPAID']", doc);
+
+    var _creativeData = {AdParameters : adParameters.childNodes["0"].data};
+    var _vpAidJS = MediaFile.childNodes["0"].data;
     console.log(_creativeData['AdParameters']);
     console.log(_vpAidJS);
 
