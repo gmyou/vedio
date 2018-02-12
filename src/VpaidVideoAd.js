@@ -162,10 +162,11 @@ var VpaidVideoPlayer = function() {
       return;
     }
     var percentPlayed =
-        this.videoSlot_.currentTime * 100.0 / this.videoSlot_.duration;
+        this.videoSlot_.currentTime / this.videoSlot_.duration * 100.0;
     if (percentPlayed >= this.quartileEvents_[this.lastQuartileIndex_].value) {
       var lastQuartileEvent = this.quartileEvents_[this.lastQuartileIndex_].event;
-      this.eventsCallbacks_[lastQuartileEvent];
+      this.callEvent_(lastQuartileEvent);
+      // this.eventsCallbacks_[lastQuartileEvent];
       this.lastQuartileIndex_ += 1;
     }
     if (this.videoSlot_.duration > 0) {
@@ -464,6 +465,7 @@ var VpaidVideoPlayer = function() {
    */
   VpaidVideoPlayer.prototype.callEvent_ = function(eventType) {
     if (eventType in this.eventsCallbacks_) {
+      // console.log('VpaidVideoAd.event: ', eventType);
       this.eventsCallbacks_[eventType]();
     }
   };

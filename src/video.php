@@ -114,14 +114,19 @@ header("Pragma: no-cache");
             'AdPlaying',
             'AdExpanded',
             'AdSkipped',
-            'AdVolumeChange'
+            'AdVolumeChange',
+            'AdVideoStart',
+            'AdVideoFirstQuartile',
+            'AdVideoMidpoint',
+            'AdVideoThirdQuartile',
+            'AdVideoComplete'
         ];
 
         for (let index = 0; index < eventsCallbacks.length; index++) {
             const element = eventsCallbacks[index];
-            console.log(element);
+            // console.log('ADS.event: ', element);
             VPAIDCreative.eventsCallbacks_[element] = function() {
-                console.log('CallBack: ', element);
+                // console.log('ADS.calledBack.event: ', element);
             }
         }
 
