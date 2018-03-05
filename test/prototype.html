@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+	<html lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<script src="prototype.js"></script>
+	<script>
+	window.onload = function() {
+		protoType = new Prototype();
+
+		var http = protoType.getHTTPObject();
+		http.open("GET", "http://prototype.local.com/src/vpaid2jslinear.xml", true);
+		http.onreadystatechange = function() {
+			if (http.readyState == 4) {
+				protoType.vast = http.responseText;
+				console.log(protoType.vast);
+			}
+		}
+		http.send(null);
+
+	};
+	</script>
+</body>
+</html>
